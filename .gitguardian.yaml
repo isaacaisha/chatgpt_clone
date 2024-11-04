@@ -1,0 +1,5 @@
+secret:
+  ignored_matches:
+  - match: b853c4e9bd14031e61f4c567738ce9a61a24f6ca6990db4b4391f519246be33f
+    name: OpenAI API Key - .env:l.1
+version: 2
