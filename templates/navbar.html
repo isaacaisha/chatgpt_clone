@@ -1,0 +1,35 @@
+{% load static %}
+
+<!-- Navbar -->
+{% if not hide_navbar %}
+<nav class="navbar navbar-expand-md navbar-dark">
+  <a class="navbar-brand col" href="https://siisiex.copromanager.pro/" aria-label="SìįSí Dbt Documentation"
+    target="_blank">
+    SìįSí Dbt
+  </a>
+  <button class="navbar-toggler mx-auto" type="button" data-bs-toggle="collapse"
+    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+    aria-label="Toggle navigation">
+    Menu <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      {% if not user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link log-out" href="{% url 'logout' %}">
+          <span class="d-block" style="font-size:1.9rem;">∞<br>∞ New session ∞<br></span>
+          <button id="logout" type="button" class="btn btn-secondary">
+            <span class="gold1" style="font-size:1.45rem;">Login</span>
+          </button>
+        </a>
+      </li>
+      {% else %}
+      <li class="nav-item mb-5">
+        <a class="nav-link log-out" href="{% url 'logout' %}">Logout</a>
+      </li>
+      {% endif %}
+    </ul>
+  </div>
+</nav>
+{% endif %}

@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'chatgpt_app',
 ]
 
+AUTH_USER_MODEL = 'chatgpt_app.User'
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -120,7 +122,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATIC_ROOT = '/Users/lesanebyby/django_chatgpt_clone/staticfiles'  # Folder where static files will be collected
+
 STATICFILES_DIRS = [
     "/Users/lesanebyby/django_chatgpt_clone/static",
 ]

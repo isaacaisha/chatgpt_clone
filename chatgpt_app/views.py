@@ -1,10 +1,82 @@
 import os
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from openai import OpenAI
 from django.http import JsonResponse
-from .models import ChatData
+from .forms import MyUserCreationForm
+from .models import User, ChatData
+from django.contrib.auth import authenticate, login, logout
+from datetime import datetime
+
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
+
+
+def loginPage(request):
+    page = 'login'
+    hide_navbar = True
+    hide_edit_user = True
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    if request.method == 'POST':
+        email = request.POST.get('email').lower()
+        password = request.POST.get('password')
+
+        try:
+            user = User.objects.get(email=email)
+        except:
+            messages.error(request, f'User email: {email} doesn\'t exit 😝')
+
+        user = authenticate(request, email=email, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, f'User email: {email} or Password  doesn\'t exit 😝')
+
+    context = {
+        'page': page,
+        'hide_navbar': hide_navbar,
+        'hide_edit_user': hide_edit_user,
+        'date': datetime.now().strftime("%a %d %B %Y"),
+        }
+    return render(request, 'login_register.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
+
+
+def registerPage(request):
+    page = 'register'
+    form = MyUserCreationForm()
+    hide_navbar = True
+    hide_edit_user = True
+
+    if request.method == 'POST':
+        form = MyUserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save(commit=False)
+            user.username = user.username.lower()
+            user.save()
+            login(request, user)
+            return redirect('index')
+        else:
+            messages.error(request, f'Sorry, something went wrong during registration 😝')
+
+    context = {
+        'page': page,
+        'form': form,
+        'hide_navbar': hide_navbar,
+        'hide_edit_user': hide_edit_user,
+        'date': datetime.now().strftime("%a %d %B %Y"),
+        }
+    return render(request, 'login_register.html', context)
+
 
 def index(request):
     return render(request, 'index.html')
