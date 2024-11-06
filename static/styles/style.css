@@ -1454,7 +1454,7 @@ textarea#userInput {
 input {
     color: #72e9fc !important;
     background-color: rgb(105, 109, 151);
-    font-size: 5vw !important;
+    font-size: 4vw !important;
 }
 
 textarea {
@@ -1840,7 +1840,7 @@ textarea#generatedText {
 
 .input-container {
     display: flex;
-    padding: 1rem;
+    padding: 0.5rem;
     background-color: #f1f5f9;
     border-top: 1px solid #e5e7eb;
 }
