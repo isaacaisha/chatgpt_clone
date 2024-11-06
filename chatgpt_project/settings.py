@@ -32,6 +32,9 @@ PROXY = {
     'https': 'http://127.0.0.1:8080',
 }
 
+# Login URL for authentication redirects
+LOGIN_URL = '/'
+
 # Application definition
 
 INSTALLED_APPS = [

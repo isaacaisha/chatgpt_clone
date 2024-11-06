@@ -1,29 +1,20 @@
-<!DOCTYPE html>
+{% extends 'main.html' %}
+
 {% load static %}
-<html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:image" content="https://your.copromanager.pro/static/assets/img/logo_ai.jpg">
-    <title>Chat System</title>
-    <link rel="icon" type="image/png" href="static/assets/img/favicon1.ico">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <!-- Custom fonts for this template -->
-    <link rel="stylesheet" href="{% static 'styles/style.css' %}" />
-</head>
+{% block favicon %}
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon7.ico' %}">
+{% endblock %}
 
-<body class="bg-blue-50">
-    {% include 'navbar.html' %}
-    
-    <div class="profile__info text-center text-2xl">
-        <p>welcome</p>
-        <p>{{user.username}} 🚀 {{user.name}}</p>
-        <!--<p>{{user.email}}</p>-->
-    </div>
+{% block title %}Home{% endblock %}
+
+{% block edit_user %}{% endblock %}
+
+{% block content %}
+
     <div class="chat-container">
-        <header class="bg-blue-600 text-white p-4 text-center">
-            <h1 class="text-2xl">Chat AI</h1>
+        <header class="bg-primary text-white p-4 text-center">
+            <h1>Chat AI</h1>
         </header>
         <main class="flex flex-col flex-grow p-4">
             <div id="chat-history" class="chat-history mb-4">
@@ -32,15 +23,14 @@
             <div class="input-container">
                 <form method="POST" id="chat-form" class="flex w-full">
                     {% csrf_token %}
-                    <input id="chat-input" type="text" class="flex-grow p-2 border border-blue-300 rounded-l bg-white"
+                    <input id="chat-input" type="text" class="flex-grow p-2 border border-primary bg-white"
                         placeholder="Type your message here...">
-                    <button type="submit" class="bg-blue-600 text-white p-2 rounded-r">Send</button>
+                    <button type="submit" class="btn bg-primary text-white p-4">Send</button>
                 </form>
             </div>
         </main>
     </div>
 
-    <script src="{% static 'js/script.js' %}"></script>
-</body>
+{% block footer %}{% endblock %}
 
-</html>
+{% endblock %}

@@ -1,6 +1,7 @@
 import os
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 from openai import OpenAI
 from django.http import JsonResponse
 from .forms import MyUserCreationForm
@@ -78,8 +79,12 @@ def registerPage(request):
     return render(request, 'login_register.html', context)
 
 
+@login_required
 def index(request):
-    return render(request, 'index.html')
+    context = {
+        'date': datetime.now().strftime("%a %d %B %Y"),
+        }
+    return render(request, 'index.html', context)
 
 def response(request):
     if request.method == 'POST':

@@ -79,15 +79,14 @@
     {% if user.is_authenticated %}
     <div class="roomList">
       <div class="profile">
-        <div class="profile__avatar">
+        <!--<div class="profile__avatar">
           <div class="avatar avatar--large active">
             <img src="{{user.avatar.url}}" />
           </div>
-        </div>
+        </div>-->
         <div class="profile__info">
-          <h3>{{user.username}} 🚀</h3>
+          <h3>{{user.username}} 🚀 {{user.name}}</h3>
           <p>{{user.email}}</p>
-    
         </div>
       </div>
     </div>
