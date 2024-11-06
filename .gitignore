@@ -32,3 +32,6 @@ apps/static/assets/.temp
 .env
 venv/
 venv/
+__pycache__/
+*.pyc
+db.sqlite3
