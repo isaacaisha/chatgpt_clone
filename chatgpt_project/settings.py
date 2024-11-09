@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 import os
+from decouple import config
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -27,10 +28,30 @@ SECRET_KEY = 'django-insecure-#bf*vlv%$(l74v8l3gcb2%jx=dudjsl1t@ux^65t9)-xx#ukdf
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
 PROXY = {
     'http': 'http://127.0.0.1:8080',
     'https': 'http://127.0.0.1:8080',
 }
+
+# Set secure headers (Optional but recommended for production)
+CSRF_TRUSTED_ORIGINS = [
+    'https://chatgpt-clone.copromanager.pro/',
+    'https://www.chatgpt-clone.copromanager.pro/'
+]
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
+
+SESSION_COOKIE_SECURE = not config('DEBUG', default=True, cast=bool)
+CSRF_COOKIE_SECURE = not config('DEBUG', default=True, cast=bool)
+SECURE_SSL_REDIRECT = not config('DEBUG', default=True, cast=bool)
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_AGE = 900  # 15 minutes
+
+# Other CORS settings you might use
+CORS_ALLOW_CREDENTIALS = True  # Allow cookies and HTTP authentication
 
 # Login URL for authentication redirects
 LOGIN_URL = '/'
@@ -45,6 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chatgpt_app',
+    'django_recaptcha',
 ]
 
 AUTH_USER_MODEL = 'chatgpt_app.User'
@@ -57,7 +79,31 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'csp.middleware.CSPMiddleware',
 ]
+
+# reCAPTCHA settings for v2 and v3
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+
+RECAPTCHA_REQUIRED_SCORE = 0.85  # For reCAPTCHA v3
+
+# Content Security Policy settings
+CSP_DEFAULT_SRC = ("'self'",)  # Allow resources from the same origin by default
+CSP_SCRIPT_SRC = ("'self'", 'https://trusted.cdn.com', 'https://code.jquery.com')  # Allow scripts from self and CDN
+CSP_STYLE_SRC = ("'self'", 'https://cdn.jsdelivr.net', 'https://fonts.googleapis.com')  # Allow styles from self and CDN
+CSP_IMG_SRC = ("'self'", 'data:', 'https://trusted.cdn.com')  # Allow images from self, data URIs, and trusted CDN
+CSP_FONT_SRC = ("'self'", 'https://fonts.gstatic.com')  # Allow fonts from self and Google Fonts
+CSP_CONNECT_SRC = ("'self'",)  # Allow XMLHttpRequest, WebSocket, etc. only from the same origin
+CSP_FRAME_SRC = ("'none'",)  # Disallow embedding the page in frames
+CSP_BASE_URI = ("'self'",)  # Allow base URIs only from self
+CSP_FORM_ACTION = ("'self'",)  # Allow form submissions only to the same origin
+CSP_OBJECT_SRC = ("'none'",)  # Disallow object, embed, and applet elements
+CSP_SANDBOX = ("allow-forms", "allow-scripts")  # Restrict features (like form submission and script execution)
+
+# You can also use these settings if you want to allow specific sources or external resources:
+# CSP_FRAME_ANCESTORS = ("'none'",)
+# CSP_MANIFEST_SRC = ("'self'",)
 
 ROOT_URLCONF = 'chatgpt_project.urls'
 
@@ -126,10 +172,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/Users/lesanebyby/django_chatgpt_clone/staticfiles'  # Folder where static files will be collected
+STATIC_ROOT = 'staticfiles'  # Folder where static files will be collected
 
 STATICFILES_DIRS = [
-    "/Users/lesanebyby/django_chatgpt_clone/static",
+    "static",
 ]
 
 # Default primary key field type

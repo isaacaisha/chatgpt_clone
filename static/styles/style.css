@@ -65,6 +65,7 @@ a {
 }
 
 /*========== components ==========*/
+
 .container {
   max-width: 120rem;
   width: 90%;
@@ -141,7 +142,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   background-color: var(--color-dark-light);
   color: var(--color-light);
 }
-
+/*
 .btn > svg {
   fill: currentColor;
   width: 1.6rem;
@@ -307,11 +308,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
     display: none;
   }
 }
-
+*/
 /*==============================
 =>  Header Section
 ================================*/
-
+/*
 .header {
   padding: 1.5rem;
   background-color: var(--color-dark);
@@ -431,7 +432,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .dropdown-button:hover svg {
   fill: var(--color-main);
 }
-
+*/
 /*==============================
 =>  Layout
 ================================*/
@@ -466,6 +467,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .layout--2 > .container > div:last-child {
   flex-basis: 25%;
 }
+
 /*========== Layout Box ==========*/
 
 .layout__box {
@@ -606,7 +608,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Topics
 ================================*/
-
+/*
 .topics__header {
   margin-bottom: 2rem;
 }
@@ -665,11 +667,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
     margin-bottom: 2.4rem;
   }
 }
-
+*/
 /*==============================
 =>  Room List
 ================================*/
-
+/*
 .roomList__header {
   display: flex;
   justify-content: space-between;
@@ -688,9 +690,9 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   font-weight: 500;
   color: var(--color-dark-light);
 }
-
+*/
 /*========== Room List Room ==========*/
-
+/*
 .roomListRoom {
   margin-bottom: 2.4rem;
   background-color: var(--color-dark);
@@ -776,11 +778,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   font-weight: 500;
   font-size: 1.3rem;
 }
-
+*/
 /*==============================
 =>  Activities
 ================================*/
-
+/*
 .activities {
   background: var(--color-dark);
   border-radius: 5px;
@@ -838,31 +840,31 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .roomListRoom__actions svg {
   fill: var(--color-light-gray);
 }
-
+*/
 /*==============================
 =>  Create Room
 ================================*/
-
+/*
 .create-room.layout .layout__box {
   max-width: 68rem;
 }
-
+*/
 /*==============================
 =>  Update Account
 ================================*/
-
+/*
 .update-account.layout .layout__box {
   max-width: 68rem;
 }
-
+*/
 /*==============================
 =>  Delete Item
 ================================*/
-
+/*
 .delete-item.layout .layout__box {
   max-width: 68rem;
 }
-
+*/
 /*==============================
 =>  Auth
 ================================*/
@@ -887,7 +889,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Settings
 ================================*/
-
+/*
 .settings__avatar {
   margin-bottom: 3rem;
   text-align: center;
@@ -899,10 +901,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .settings__avatar .avatar {
   margin: 1rem;
 }
-
+*/
 /*==============================
 =>  Profile
 ================================*/
+
 .profile {
   margin-bottom: 3rem;
 }
@@ -926,7 +929,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   font-weight: 500;
   margin-bottom: 1rem;
 }
-
+/*
 .profile__about {
   margin-top: 2rem;
 }
@@ -944,11 +947,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .profile-page .roomList__header h2 {
   color: var(--color-dark-light);
 }
-
+*/
 /*==============================
 =>  Room
 ================================*/
-
+/*
 .room,
 .participants {
   background: var(--color-dark);
@@ -1037,7 +1040,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   padding-left: 2rem;
   padding-right: 2rem;
   height: 80.5vh;
-  /* overflow-y: auto; */
+  /* overflow-y: auto; /
   padding-bottom: 0;
 }
 
@@ -1214,10 +1217,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
   color: var(--color-main);
   font-weight: 1.4rem;
 }
-
+*/
 /*==============================
 =>  Title Styles
 ================================*/
+
 #content > div.container-fluid > div > div > h1,
 #content > div > div.container-fluid > div > div > h1 {
     background-color: rgb(41, 41, 46);
@@ -1235,6 +1239,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Jumbotron Animation
 ================================*/
+
 #content > div.container-fluid > div > div {
     animation: color-change 10s linear infinite;
 }
@@ -1254,6 +1259,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Navigation Styles
 ================================*/
+
 #content > nav {
     margin-bottom: 0rem;
 }
@@ -1272,6 +1278,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Navbar Styles
 ================================*/
+
 #content > nav > button {
     background-color: rgb(41, 41, 46) !important;
 }
@@ -1321,6 +1328,7 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 /*==============================
 =>  Popup Styles
 ================================*/
+/*
 .popup-container {
     position: fixed;
     top: 67%;
@@ -1351,10 +1359,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 #closePopupButton:hover {
     color: rgb(0, 255, 171);
 }
-
+*/
 /*==============================
 =>  Text Colors
 ================================*/
+/*
 .SìįSí,
 .gold1 {
     color: gold;
@@ -1363,10 +1372,6 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .grey {
   color: rgb(178, 189, 189) !important;
 }
-/* Btn back-home from conversation detailed 
-#content > div:nth-child(4) > main > div > div > button > a {
-  color: rgb(178, 189, 189) !important;
-}*/
 
 .green {
     color: rgb(52, 97, 52);
@@ -1391,10 +1396,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .purple {
     color: rgb(168 85 247 / var(--tw-text-opacity));
 }
-
+*/
 /*==============================
 =>  Conversation Styles
 ================================*/
+/*
 .conversations {
     color: #70f8fd;
     text-align: center;
@@ -1414,11 +1420,10 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
     text-overflow: ellipsis;
     white-space: nowrap;
     max-width: 100%;
-    /* Ensure the text does not exceed container width */
 }
 
 .user-message {
-    color: #4285F4; /* A shade of blue */
+    color: #4285F4;
 }
 
 .conversation_id,
@@ -1438,10 +1443,11 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 .created {
     color: #d0ebec;
 }
-
+*/
 /*==============================
 =>  Input Styles
 ================================*/
+/*
 textarea#userInput {
     color: #72e9fc !important;
 }
@@ -1461,10 +1467,11 @@ textarea {
     background-color: rgb(45, 45, 57) !important;
     font-size: medium !important;
 }
-
+*/
 /*==============================
 =>  Container Styling for Histories
 ================================*/
+/*
 #historiesContainer > pre,
 #historiesContainerJson > pre,
 #showBlogPostsButton > pre {
@@ -1492,10 +1499,11 @@ textarea {
     left: 50%;
     transform: translateX(-50%);
 }
-
+*/
 /*==============================
 =>  Custom UI Components
 ================================*/
+
 .crown {
     border: 0.1rem solid #AEFAFC;
     border-radius: 2.3rem;
@@ -1513,6 +1521,7 @@ textarea {
 /*==============================
 =>  Message Container Styles
 ================================*/
+/*
 .message-container {
     border: 1px solid #ccc;
     padding: 10px;
@@ -1531,10 +1540,11 @@ textarea {
     margin-top: 5px;
     color: #333;
 }
-
+*/
 /*==============================
 =>  Form and Textarea Styles
 ================================*/
+/*
 #generateDraw,
 #userInput,
 #generatedText,
@@ -1568,10 +1578,11 @@ textarea#message {
     line-height: 1.9rem;
     padding: 0.9rem;
 }
-
+*/
 /*==============================
 =>  Dividers and Placeholders
 ================================*/
+/*
 .divider {
     margin: 10px 0;
     border-top: 1px solid #ccc;
@@ -1583,10 +1594,11 @@ textarea#message {
     font-style: italic;
     color: #999;
 }
-
+*/
 /*==============================
 =>  Additional Custom Styling
 ================================*/
+/*
 textarea#generatedText {
     color: #AEFAFC;
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -1646,19 +1658,21 @@ textarea#generatedText {
     border: 0.1rem solid #73DD7E;
     color: #1295FA;
 }
-
+*/
 /*==============================
 =>  Centered Layout
 ================================*/
+/*
 .center {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
+*/
 /*==============================
 =>  Spinner Animation for Loader
 ================================*/
+/*
 @keyframes rotate {
     from {
         transform: rotate(0deg);
@@ -1678,10 +1692,11 @@ textarea#generatedText {
     border-bottom-color: transparent;
     animation: rotate 1s linear infinite;
 }
-
+*/
 /*==============================
 =>  Screenshot Section
 ================================*/
+/*
 #screenshotResult {
     text-align: center;
 }
@@ -1698,10 +1713,11 @@ textarea#generatedText {
         max-height: 991px;
     }
 }
-
+*/
 /*==============================
 =>  Footer Styles
 ================================*/
+/*
 .footer {
     background-color: #343a40;
     color: #f8f9fa;
@@ -1720,6 +1736,7 @@ textarea#generatedText {
 .lower-size {
     font-size: 1.09rem;
 }
+*/
 
 .copyright {
     background-color: rgb(41, 41, 46);
@@ -1734,6 +1751,7 @@ textarea#generatedText {
 /*==============================
 =>  Loader for Website Review Section
 ================================*/
+/*
 .loader {
     display: none;
     border: 5px solid #f3f3f3;
@@ -1767,7 +1785,7 @@ textarea#generatedText {
     justify-content: center;
     box-shadow: 0 2px 5px rgb(45, 45, 57);
     cursor: pointer;
-    margin: 0 20px; /* Add margin to separate buttons */
+    margin: 0 20px;
 }
 
 .svg {
@@ -1788,10 +1806,7 @@ textarea#generatedText {
     height: auto;
     width: auto;
 }
-
-
-
-
+*/
 
 .chat-container {
     display: flex;
@@ -1829,22 +1844,17 @@ textarea#generatedText {
 
 .message.ai {
     background-color: #bfdbfe;
+    color: black;
     text-align: left;
 }
 
 .message.user {
     background-color: #60a5fa;
-    text-align: right;
     color: white;
+    text-align: right;
 }
 
-.input-container {
-    display: flex;
-    padding: 0.5rem;
-    background-color: #f1f5f9;
-    border-top: 1px solid #e5e7eb;
-}
-
-#chat-input, #chat-history > div.chat-message.ai > div {
-  color: #333 !important;
+#chat-input {
+  font-size: x-large;
+  padding: 1rem;
 }

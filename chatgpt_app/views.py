@@ -4,52 +4,13 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from openai import OpenAI
 from django.http import JsonResponse
-from .forms import MyUserCreationForm
-from .models import User, ChatData
+from .forms import LoginForm, MyUserCreationForm
+from .models import ChatData
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
 
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
-
-
-def loginPage(request):
-    page = 'login'
-    hide_navbar = True
-    hide_edit_user = True
-
-    if request.user.is_authenticated:
-        return redirect('index')
-
-    if request.method == 'POST':
-        email = request.POST.get('email').lower()
-        password = request.POST.get('password')
-
-        try:
-            user = User.objects.get(email=email)
-        except:
-            messages.error(request, f'User email: {email} doesn\'t exit 😝')
-
-        user = authenticate(request, email=email, password=password)
-
-        if user is not None:
-            login(request, user)
-            return redirect('index')
-        else:
-            messages.error(request, f'User email: {email} or Password  doesn\'t exit 😝')
-
-    context = {
-        'page': page,
-        'hide_navbar': hide_navbar,
-        'hide_edit_user': hide_edit_user,
-        'date': datetime.now().strftime("%a %d %B %Y"),
-        }
-    return render(request, 'login_register.html', context)
-
-
-def logoutUser(request):
-    logout(request)
-    return redirect('login')
 
 
 def registerPage(request):
@@ -77,6 +38,46 @@ def registerPage(request):
         'date': datetime.now().strftime("%a %d %B %Y"),
         }
     return render(request, 'login_register.html', context)
+
+
+def loginPage(request):
+    page = 'login'
+    form = LoginForm()
+    hide_navbar = True
+    hide_edit_user = True
+
+    if request.user.is_authenticated:
+        return redirect('index')
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            email = form.cleaned_data['email'].lower()
+            password = form.cleaned_data['password']
+            user = authenticate(request, email=email, password=password)
+            print(f"User: {email}")
+            print(f"Form Data:\n{form.cleaned_data['captcha']}")
+            if user:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.error(request, "Invalid email or password 😝.")
+        else:
+            messages.error(request, "Invalid reCAPTCHA. Please try again 😝.")
+
+    context = {
+        'page': page,
+        'form': form,
+        'hide_navbar': hide_navbar,
+        'hide_edit_user': hide_edit_user,
+        'date': datetime.now().strftime("%a %d %B %Y"),
+        }
+    return render(request, 'login_register.html', context)
+
+
+def logoutUser(request):
+    logout(request)
+    return redirect('login')
 
 
 @login_required

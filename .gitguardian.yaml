@@ -2,4 +2,10 @@ secret:
   ignored_matches:
   - match: b853c4e9bd14031e61f4c567738ce9a61a24f6ca6990db4b4391f519246be33f
     name: OpenAI API Key - .env:l.1
+  - match: d366a89681bacc016878c8740ddd59f3818ba8eda370d92d9d92e9a883743679
+    name: reCAPTCHA Key - chatgpt_project/settings.py:l.93
+  - match: e9552d745435cc62a02e4771a9f6c8636b76055aab1a99c4539035bd67aa4aab
+    name: reCAPTCHA Key - chatgpt_project/settings.py:l.95
+  - match: d7c218f6a721fdf09e1dc616c37332b5d91ecd7dbbe07e57f730344eb7fdec5f
+    name: reCAPTCHA Key - chatgpt_project/settings.py:l.91
 version: 2

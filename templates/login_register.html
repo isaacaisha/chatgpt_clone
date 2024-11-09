@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block favicon %}
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon7.ico' %}">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon3.ico' %}">
 {% endblock %}
 
 {% block title %}
@@ -32,15 +32,20 @@
   
         <form class="form" method="POST" action="">
           {% csrf_token %}
-  
-          <div class="form__group form__group">
-            <label for="room_name">Email</label>
-            <input id="username" name="email" type="text" placeholder="e.g. siisiAi@gmail.com" />
+          
+          <div class="form__group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
           </div>
           <div class="form__group">
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password"
-              placeholder="&bull;&bull;&bull;&bull;&bull;&bull;&bull;&bull;" />
+            {{ form.password.label_tag }}
+            {{ form.password }}
+          </div>
+          <div class="form__group">
+            {{ form.captcha }}
+            {% for error in form.captcha.errors %}
+              <p class="text-danger">{{ error }}</p>
+            {% endfor %}
           </div>
   
           <div class="text-center">

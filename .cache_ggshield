@@ -1,1 +1,1 @@
-{"last_found_secrets": [{"name": "OpenAI API Key - /Users/lesanebyby/django_chatgpt_clone/.env", "match": "b853c4e9bd14031e61f4c567738ce9a61a24f6ca6990db4b4391f519246be33f"}]}
+{"last_found_secrets": [{"name": "reCAPTCHA Key - /Users/lesanebyby/django_chatgpt_clone/chatgpt_project/settings.py", "match": "d7c218f6a721fdf09e1dc616c37332b5d91ecd7dbbe07e57f730344eb7fdec5f"}]}

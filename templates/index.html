@@ -3,7 +3,7 @@
 {% load static %}
 
 {% block favicon %}
-<link rel="shortcut icon" type="image/x-icon" href="{% static 'images/favicon7.ico' %}">
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon1.ico' %}">
 {% endblock %}
 
 {% block title %}Home{% endblock %}
@@ -20,12 +20,15 @@
             <div id="chat-history" class="chat-history mb-4">
                 <!-- Chat history will be dynamically inserted here -->
             </div>
-            <div class="input-container">
+            <div class="justify-center text-center">
                 <form method="POST" id="chat-form" class="flex w-full">
                     {% csrf_token %}
-                    <input id="chat-input" type="text" class="flex-grow p-2 border border-primary bg-white"
-                        placeholder="Type your message here...">
-                    <button type="submit" class="btn bg-primary text-white p-4">Send</button>
+                    <div class="">
+                        <input id="chat-input" type="text" class="border border-primary"
+                            placeholder="Type your message here...">
+                            <br><br>
+                        <button type="submit" class="btn bg-primary text-white p-4">Send</button>
+                    </div>
                 </form>
             </div>
         </main>
