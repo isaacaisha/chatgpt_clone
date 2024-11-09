@@ -8,6 +8,8 @@ from .forms import LoginForm, MyUserCreationForm
 from .models import ChatData
 from django.contrib.auth import authenticate, login, logout
 from datetime import datetime
+from django.apps import apps
+apps.get_model('chatgpt_app', 'User')
 
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
