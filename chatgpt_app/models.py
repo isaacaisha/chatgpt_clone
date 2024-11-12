@@ -29,6 +29,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
+    username = None  # Remove the username field
     name = models.CharField(max_length=199, null=True)
     email = models.EmailField(unique=True, null=True)
 

@@ -1,15 +1,16 @@
 import os
+
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from openai import OpenAI
 from django.http import JsonResponse
+
+from openai import OpenAI
 from .forms import LoginForm, MyUserCreationForm
 from .models import ChatData
 from django.contrib.auth import authenticate, login, logout
-from datetime import datetime
-from django.apps import apps
-apps.get_model('chatgpt_app', 'User')
+
+from django.utils import timezone
 
 
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
@@ -17,28 +18,31 @@ client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 def registerPage(request):
     page = 'register'
-    form = MyUserCreationForm()
+    form = MyUserCreationForm(request.POST or None)
     hide_navbar = True
     hide_edit_user = True
 
     if request.method == 'POST':
-        form = MyUserCreationForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.username = user.username.lower()
-            user.save()
-            login(request, user)
-            return redirect('index')
+            try:
+                user = form.save(commit=False)
+                user.email = user.email.lower()
+                user.save()
+                messages.success(request, 'Registration successful! Please log in.')
+                return redirect('login')
+            except Exception as e:
+                messages.error(request, f'Sorry, an error occurred: {e}')
         else:
-            messages.error(request, f'Sorry, something went wrong during registration 😝')
+            error_messages = form.errors.as_text()
+            messages.error(request, f'Sorry, something went wrong during registration. Details: {error_messages}😝.')
 
     context = {
         'page': page,
         'form': form,
         'hide_navbar': hide_navbar,
         'hide_edit_user': hide_edit_user,
-        'date': datetime.now().strftime("%a %d %B %Y"),
-        }
+        'date': timezone.now().strftime("%a %d %B %Y"),
+    }
     return render(request, 'login_register.html', context)
 
 
@@ -48,20 +52,18 @@ def loginPage(request):
     hide_navbar = True
     hide_edit_user = True
 
-    if request.user.is_authenticated:
-        return redirect('index')
-
     if request.method == 'POST':
         form = LoginForm(request.POST)
         if form.is_valid():
             email = form.cleaned_data['email'].lower()
             password = form.cleaned_data['password']
             user = authenticate(request, email=email, password=password)
-            print(f"User: {email}")
-            print(f"Form Data:\n{form.cleaned_data['captcha']}")
+            
             if user:
                 login(request, user)
-                return redirect('index')
+                #return redirect('index')
+                # Redirect to two_factor login
+                return redirect('two_factor:login')
             else:
                 messages.error(request, "Invalid email or password 😝.")
         else:
@@ -72,7 +74,7 @@ def loginPage(request):
         'form': form,
         'hide_navbar': hide_navbar,
         'hide_edit_user': hide_edit_user,
-        'date': datetime.now().strftime("%a %d %B %Y"),
+        'date': timezone.now().strftime("%a %d %B %Y"),
         }
     return render(request, 'login_register.html', context)
 
@@ -85,7 +87,7 @@ def logoutUser(request):
 @login_required
 def index(request):
     context = {
-        'date': datetime.now().strftime("%a %d %B %Y"),
+        'date': timezone.now().strftime("%a %d %B %Y"),
         }
     return render(request, 'index.html', context)
 

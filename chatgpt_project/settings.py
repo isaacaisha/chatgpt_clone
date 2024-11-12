@@ -24,6 +24,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-#bf*vlv%$(l74v8l3gcb2%jx=dudjsl1t@ux^65t9)-xx#ukdf'
 
+
+## To Reset Password For Developement
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# To Reset Password For Production 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+#DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL')
+
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -54,7 +67,20 @@ SESSION_COOKIE_AGE = 900  # 15 minutes
 CORS_ALLOW_CREDENTIALS = True  # Allow cookies and HTTP authentication
 
 # Login URL for authentication redirects
-LOGIN_URL = '/'
+#LOGIN_URL = '/'
+LOGIN_URL = 'two_factor:login'
+LOGIN_REDIRECT_URL = 'index'  # Redirect to your desired page after login
+
+# this one is optional
+#LOGIN_REDIRECT_URL = 'two_factor:profile'
+
+# Optional: Customize 2FA settings
+TWO_FACTOR_PATCH_ADMIN = True  # Apply 2FA to Django admin
+TWO_FACTOR_LOGIN_TEMPLATE = 'two_factor/login_register.html'
+TWO_FACTOR_QR_FACTORY = 'qrcode.image.pil.PilImage'  # Generates QR codes for authenticator apps
+
+# Optional: Control when users should be redirected to setup
+TWO_FACTOR_AUTO_SETUP = False  # If False, users must manually complete the setup
 
 # Application definition
 
@@ -65,8 +91,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'chatgpt_app',
     'django_recaptcha',
+
+    # 2AF Authentication
+    'django_otp',
+    'django_otp.plugins.otp_static',
+    'django_otp.plugins.otp_totp',
+    'django_otp.plugins.otp_email',  # <- if you want email capability.
+    'two_factor',
+    'two_factor.plugins.phonenumber',  # <- if you want phone number capability.
+    'two_factor.plugins.email',  # <- if you want email capability.
+    #'two_factor.plugins.yubikey',  # <- for yubikey capability.
 ]
 
 AUTH_USER_MODEL = 'chatgpt_app.User'
@@ -80,6 +117,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     #'csp.middleware.CSPMiddleware',
+    
+    # 2AF Authentication
+    'django_otp.middleware.OTPMiddleware',
 ]
 
 # reCAPTCHA settings for v2 and v3

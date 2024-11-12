@@ -10,11 +10,17 @@ from .models import User
 # Create your forms here.
 
 class MyUserCreationForm(UserCreationForm):
-    # Use reCAPTCHA v3 for registration
-    #captcha = ReCaptchaField(widget=ReCaptchaV3())
+    captcha = ReCaptchaField(widget=ReCaptchaV2Checkbox(
+        attrs={
+            'data-theme': 'dark',
+            'data-size': 'compact'
+            }
+        )
+    )
+
     class Meta:
         model = User
-        fields =  ['name', 'username', 'email', 'password1', 'password2']
+        fields =  ['name', 'email', 'password1', 'password2', 'captcha']
 
 
 class LoginForm(forms.Form):

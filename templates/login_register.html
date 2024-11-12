@@ -29,6 +29,10 @@
       </div>
       <div class="layout__body">
         <h2 class="auth__tagline">·SìįSí·Dbt·</h2>
+
+        <div class="mb-3">
+          <a href="{% url 'two_factor:setup' %}">Enable Two-Factor Authentication</a>
+        </div>
   
         <form class="form" method="POST" action="">
           {% csrf_token %}
@@ -65,7 +69,7 @@
           </div>
           
         </form>
-  
+
         <div class="auth__action">
           <p>Haven't signed up yet?</p>
           <a href="{% url 'register' %}" class="btn btn--link">Sign Up</a>
@@ -93,6 +97,9 @@
             <label for="room_name">{{field.label}}</label>
             {{field}}
           </div>
+          {% endfor %}
+          {% for error in form.captcha.errors %}
+            <p class="text-danger">{{ error }}</p>
           {% endfor %}
   
           <div class="text-center">
