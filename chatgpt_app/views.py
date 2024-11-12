@@ -29,7 +29,8 @@ def registerPage(request):
                 user.email = user.email.lower()
                 user.save()
                 messages.success(request, 'Registration successful! Please log in.')
-                return redirect('login')
+                return redirect('two_factor:setup')
+                #return redirect('login')
             except Exception as e:
                 messages.error(request, f'Sorry, an error occurred: {e}')
         else:
