@@ -543,16 +543,49 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 
 .message.ai {
     background-color: #bfdbfe;
-    color: black;
+    color: rgb(22, 20, 20);
     text-align: left;
 }
 
 .message.user {
-    background-color: #60a5fa;
-    color: white;
+    background-color: #1267cf;
+    color: #fff;
     text-align: right;
 }
 
 #chat-input {
   padding: 1rem;
+}
+
+/*==============================
+=>  2AF Authentication Section
+================================*/
+
+/* Custom CSS for QR Code Size */
+#content > div:nth-child(4) > p:nth-child(3) > img {  
+    width: 100px !important;  /* Adjust to your desired width */
+    height: 100px !important; /* Adjust to your desired height */
+}
+
+#content > div:nth-child(3),
+#content > div:nth-child(4),
+#content > div > form > table > tbody {
+  text-align: center !important;
+}
+
+#id_auth-username, #id_token-otp_token {
+  margin: 3rem !important;
+}
+
+#id_method-method > div {
+  margin: 1.9rem;
+}
+
+#content > div > form > table {
+  margin-bottom: 5rem !important;
+}
+
+#content > div > form > button,
+#content > div > p > a {
+  background-color: #8b8b8b !important;
 }
