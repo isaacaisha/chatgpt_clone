@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import BaseUserManager
+from django.conf import settings
 
 # Create your models here.
 
@@ -35,7 +36,7 @@ class User(AbstractUser):
 
     # Use email as the unique identifier for login
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = []  # No need for username as it is removed
 
     # Link the custom manager to the User model
     objects = UserManager()
@@ -45,6 +46,7 @@ class User(AbstractUser):
     
 
 class ChatData(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.CharField(max_length=999991)
     response = models.CharField(max_length=999991)
     created_at = models.DateTimeField(auto_now_add=True)

@@ -568,24 +568,21 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
 }
 
 #content > div:nth-child(3),
-#content > div:nth-child(4),
-#content > div > form > table > tbody {
+#content > div:nth-child(4)/*,
+#content > div > form > table > tbody*/ {
   text-align: center !important;
 }
 
-#id_auth-username, #id_token-otp_token {
+#id_auth-username, #id_token-otp_token, #id_generator-token {
   margin: 3rem !important;
 }
 
 #id_method-method > div {
   margin: 1.9rem;
+  text-align: left;
 }
 
+/* footer btn */
 #content > div > form > table {
   margin-bottom: 5rem !important;
-}
-
-#content > div > form > button,
-#content > div > p > a {
-  background-color: #8b8b8b !important;
 }

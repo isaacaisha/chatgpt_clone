@@ -1,4 +1,5 @@
 {% extends 'main.html' %}
+{% load i18n %}
 
 {% load static %}
 
@@ -31,6 +32,11 @@
                     </div>
                 </form>
             </div>
+            <p class="mt-5">
+                {% blocktrans trimmed %}Go to Superuser Page: {% endblocktrans %}
+                <a href="{% url 'superuser_page' %}">Go to Superuser Page</a>
+                
+            </p>
         </main>
     </div>
 

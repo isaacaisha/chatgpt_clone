@@ -1,0 +1,21 @@
+{% extends 'main.html' %}
+
+{% load static %}
+
+{% block favicon %}
+<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon1.ico' %}">
+{% endblock %}
+
+{% block title %}Super User Dashboard{% endblock %}
+
+{% block edit_user %}{% endblock %}
+
+{% block content %}
+
+<div class="container mb-5">
+    <header class="bg-primary text-white p-4 text-center">
+        <h1>Welcome Super User {{user.name}} 🚀</h1>
+    </header>
+</div>
+
+{% endblock %}
