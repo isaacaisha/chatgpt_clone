@@ -2,19 +2,19 @@ import os
 
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.core.exceptions import ValidationError
+from django.contrib.auth.decorators import login_required
+from django.conf import settings
 from django.http import JsonResponse
 
-from django.urls import reverse
 from django_otp.decorators import otp_required
-from django_otp.plugins.otp_static.models import StaticDevice
-from django_otp.plugins.otp_totp.models import TOTPDevice
 
 from openai import OpenAI
-from .forms import LoginForm, MyUserCreationForm
+from .forms import  MyUserCreationForm, VIPUserCreationForm, LoginForm
 from .models import ChatData
 from django.contrib.auth import authenticate, login, logout
 
+from gtts import gTTS
 from django.utils import timezone
 
 
@@ -25,7 +25,6 @@ def registerPage(request):
     page = 'register'
     form = MyUserCreationForm(request.POST or None)
     hide_navbar = True
-    hide_edit_user = True
 
     if request.method == 'POST':
         if form.is_valid():
@@ -34,7 +33,6 @@ def registerPage(request):
                 user.email = user.email.lower()
                 user.save()
                 messages.success(request, 'Registration successful! Please log in.')
-                #return redirect('two_factor:setup')
                 return redirect('login')
             except Exception as e:
                 messages.error(request, f'Sorry, an error occurred: {e}')
@@ -46,17 +44,57 @@ def registerPage(request):
         'page': page,
         'form': form,
         'hide_navbar': hide_navbar,
-        'hide_edit_user': hide_edit_user,
         'date': timezone.now().strftime("%a %d %B %Y"),
     }
     return render(request, 'login_register.html', context)
+
+
+# View for the register VIP page, requiring 2FA
+@login_required
+def registerVipUser(request):
+    page = 'register_vip'
+
+    if request.method == "POST":
+        form = VIPUserCreationForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+                messages.success(request, "VIP User registered successfully!")
+                # Redirect to two_factor setup
+                return redirect('two_factor:setup')
+            except ValidationError as e:
+                # Add the error message to the form
+                messages.error(request, f'Sorry, an error occurred: {e}')
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = VIPUserCreationForm()
+
+    context = {
+        'page': page,
+        'form': form,
+        'date': timezone.now().strftime("%a %d %B %Y"),
+        'message': 'Welcome to the Superuser Page!',
+    }
+    return render(request, 'vip_register.html', context)
+
+
+# View for the login VIP page, requiring 2FA
+@login_required
+def loginVipPage(request):
+    page = 'login_vip'
+    context = {
+        'page': page,
+        'date': timezone.now().strftime("%a %d %B %Y"),
+        'message': 'Welcome to the Superuser Page!',
+    }
+    return render(request, 'vip_register.html', context)
 
 
 def loginPage(request):
     page = 'login'
     form = LoginForm()
     hide_navbar = True
-    hide_edit_user = True
 
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -68,8 +106,6 @@ def loginPage(request):
             if user:
                 login(request, user)
                 return redirect('index')
-                ## Redirect to two_factor login
-                #return redirect('two_factor:login')
             else:
                 messages.error(request, "Invalid email or password 😝.")
         else:
@@ -79,7 +115,6 @@ def loginPage(request):
         'page': page,
         'form': form,
         'hide_navbar': hide_navbar,
-        'hide_edit_user': hide_edit_user,
         'date': timezone.now().strftime("%a %d %B %Y"),
         }
     return render(request, 'login_register.html', context)
@@ -90,74 +125,59 @@ def logoutUser(request):
     return redirect('login')
 
 
-#@otp_required
 @login_required
 def index(request):
-    
     context = {
         'date': timezone.now().strftime("%a %d %B %Y"),
         }
     return render(request, 'index.html', context)
 
+
 def response(request):
     if request.method == 'POST':
         message = request.POST.get('message', '')
 
-        # Check if the message was correctly retrieved
+        # Log the received message
         print(f"Message received: {message}")
 
+        # Generate OpenAI response
         completion = client.chat.completions.create(
-            model='gpt-4o',
+            model='gpt-4',
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": message}
             ]
         )
-
         answer = completion.choices[0].message.content
-
-        # Check the generated answer
         print(f"Answer generated: {answer}")
 
-        # Associate ChatData with the logged-in user
+        # Save ChatData object
         new_chat = ChatData(user=request.user, message=message, response=answer)
-        
-        # Check the ChatData object before saving
-        print(f"ChatData to be saved: {new_chat}")
-
         new_chat.save()
-
-        # Confirm the save operation
         print(f"ChatData saved with id: {new_chat.id}")
 
-        return JsonResponse({'response': answer})
-    return JsonResponse({'response': 'Invalid request'}, status=401)
+        # Convert the OpenAI response to speech
+        tts = gTTS(text=answer, lang='en')
+        audio_path = os.path.join(settings.MEDIA_ROOT, f'response_{new_chat.id}.mp3')
+        tts.save(audio_path)
+        print(f"Audio saved at: {audio_path}")
+
+        # Return JSON response including audio URL
+        audio_url = request.build_absolute_uri(settings.MEDIA_URL + f'response_{new_chat.id}.mp3')
+        return JsonResponse({'response': answer, 'audio_url': audio_url})
 
 
-# Function to check if the user is a superuser
-def superuser_required(user):
-    return user.is_superuser
-
-# View for the superuser page, requiring 2FA and superuser status
+# View for the VIP page, requiring 2FA status
 @login_required
-#@otp_required
-#@user_passes_test(superuser_required)
-def superuser_page(request):
-    # Check if the user has any OTP device enabled
-    has_otp_device = StaticDevice.objects.filter(user=request.user).exists() or \
-                     TOTPDevice.objects.filter(user=request.user).exists()
-    
-    # If the user has an OTP device but hasn't completed 2FA, enforce 2FA
-    if has_otp_device and not request.user.is_verified():
+@otp_required
+def vipPage(request):
+    if not request.user.is_verified():
         messages.warning(request, "Please complete two-factor authentication.")
-        return redirect(f"{reverse('two_factor:login')}?next={request.path}")
-    
-    if not has_otp_device:
-        messages.warning(request, "Please set up two-factor authentication.")
-        return redirect('two_factor:setup')
+        # Redirect to two_factor login
+        return redirect('two_factor:login')
     
     context = {
         'date': timezone.now().strftime("%a %d %B %Y"),
         'message': 'Welcome to the Superuser Page!',
     }
-    return render(request, 'superuser_page.html', context)
+    return render(request, 'vip_page.html', context)

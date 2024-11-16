@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import registerPage, loginPage, logoutUser, index, response, superuser_page
+from .views import registerPage, vipPage, registerVipUser, loginVipPage, loginPage, logoutUser, index, response
 
 
 urlpatterns = [
@@ -10,5 +10,7 @@ urlpatterns = [
     path('index', index, name='index'),
     path('index/response', response, name='response'),
 
-    path('superuser/', superuser_page, name='superuser_page'),
+    path('register_vip/', registerVipUser, name='register_vip'),
+    path('login_vip/', loginVipPage, name='login_vip'),
+    path('vip_user/', vipPage, name='vip_user'),
 ]

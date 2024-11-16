@@ -1,6 +1,5 @@
 {% extends 'main.html' %}
 {% load i18n %}
-
 {% load static %}
 
 {% block favicon %}
@@ -9,36 +8,72 @@
 
 {% block title %}Home{% endblock %}
 
-{% block edit_user %}{% endblock %}
-
 {% block content %}
+<div class="chat-container">
+    <!-- Header Section -->
+    <header class="bg-primary text-white p-4 text-center">
+        <h1>Chat AI</h1>
+    </header>
+    
+    <!-- Main Chat Section -->
+    <main class="flex flex-col flex-grow p-4">
+        <!-- Chat History -->
+        <div id="chat-history" class="chat-history mb-4" role="log" aria-live="polite">
+            <!-- Messages will be dynamically added here -->
+        </div>
+        
+        <!-- Chat Input Form -->
+        <div class="justify-center text-center">
+            <form method="POST" id="chat-form" class="flex w-full">
+                {% csrf_token %}
+                <div>
+                    <input id="chat-input" type="text" class="border border-primary bg-white" 
+                           placeholder="Type your message here...">
+                    <br><br>
+                    <button type="submit" class="btn bg-primary text-white p-4">Send</button>
+                </div>
+            </form>
+        </div>
 
-    <div class="chat-container">
-        <header class="bg-primary text-white p-4 text-center">
-            <h1>Chat AI</h1>
-        </header>
-        <main class="flex flex-col flex-grow p-4">
-            <div id="chat-history" class="chat-history mb-4">
-                <!-- Chat history will be dynamically inserted here -->
+        <!-- VIP Section -->
+        <div class="container mt-5">
+            <div class="layout__boxHeader justify-content-center">
+                <div class="layout__boxTitle">
+                    <h3>-¡!¡- VIP Login -¡!¡-</h3>
+                </div>
             </div>
-            <div class="justify-center text-center">
-                <form method="POST" id="chat-form" class="flex w-full">
-                    {% csrf_token %}
-                    <div class="">
-                        <input id="chat-input" type="text" class="border border-primary bg-white"
-                            placeholder="Type your message here...">
-                            <br><br>
-                        <button type="submit" class="btn bg-primary text-white p-4">Send</button>
+            <div class="layout__body">
+                <div class="row justify-content-center">
+                    <!-- Login Card -->
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-success">
+                            <div class="card-body text-center">
+                                <h5 class="card-title text-success">Login to VIP Dashboard</h5>
+                                <p class="card-text">Access your account and manage your VIP profile.</p>
+                                <a href="{% url 'vip_user' %}" class="btn btn-success w-100">
+                                    Login
+                                </a>
+                            </div>
+                        </div>
                     </div>
-                </form>
+                </div>
+
+                <!-- Sign Up Action -->
+                <div class="auth__action text-center mt-3">
+                    <p>Haven't signed up yet?</p>
+                    <a href="{% url 'register_vip' %}" class="btn btn--link">Sign Up</a>
+                </div>
             </div>
-            <p class="mt-5">
-                {% blocktrans trimmed %}Go to Superuser Page: {% endblocktrans %}
-                <a href="{% url 'superuser_page' %}">Go to Superuser Page</a>
-                
-            </p>
-        </main>
-    </div>
+        </div>
+
+        <!-- Footer Section -->
+        <div class="text-center mb-3">
+            <span class="copyright">
+                © DBT Copyright {{ date }}
+            </span>
+        </div>
+    </main>
+</div>
 
 {% block footer %}{% endblock %}
 

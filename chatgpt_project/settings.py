@@ -13,6 +13,8 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from decouple import config
 from pathlib import Path
+from django.utils.translation import gettext_lazy as _
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#bf*vlv%$(l74v8l3gcb2%jx=dudjsl1t@ux^65t9)-xx#ukdf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # Use production email settings only if DEBUG is False
 if not DEBUG:
@@ -77,7 +79,7 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies and HTTP authentication
 # Login URL for authentication redirects
 #LOGIN_URL = '/'
 LOGIN_URL = 'two_factor:login'
-LOGIN_REDIRECT_URL = 'superuser_page'  # Redirect to your desired page after login
+LOGIN_REDIRECT_URL = 'vip_user'  # Redirect to your desired page after login
 
 # this one is optional
 #LOGIN_REDIRECT_URL = 'two_factor:profile'
@@ -119,6 +121,8 @@ AUTH_USER_MODEL = 'chatgpt_app.User'
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    #that detects the user's preferred language from their browser settings or session and applies it
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -207,14 +211,27 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
-LANGUAGE_CODE = 'fr'
+LANGUAGES = [
+    ('en', _('English')),
+    ('fr', _('French')),
+    ('es', _('Spanish')),  # Add other languages as needed
+]
+
+#LANGUAGE_CODE = 'en-us'  # Default language
+LANGUAGE_CODE = 'fr'  # Default language
 
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
+USE_L10N = True
+
 USE_TZ = True
+
+# Set the directory for translation files
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
 
 
 # Static files (CSS, JavaScript, Images)
@@ -226,6 +243,9 @@ STATIC_ROOT = 'staticfiles'  # Folder where static files will be collected
 STATICFILES_DIRS = [
     "static",
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

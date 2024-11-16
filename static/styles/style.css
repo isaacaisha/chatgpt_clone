@@ -567,22 +567,53 @@ div.p-3.rounded-3.jumbotron.bg-dark.text-light.my-4 {
     height: 100px !important; /* Adjust to your desired height */
 }
 
-#content > div:nth-child(3),
-#content > div:nth-child(4)/*,
-#content > div > form > table > tbody*/ {
+#content > div:nth-child(4) {
   text-align: center !important;
 }
 
-#id_auth-username, #id_token-otp_token, #id_generator-token {
-  margin: 3rem !important;
+#id_auth-username, #id_token-otp_token, #id_generator-token, #id_validation-token {
+  margin-bottom: 1rem !important;
 }
 
 #id_method-method > div {
-  margin: 1.9rem;
-  text-align: left;
+  margin: 1rem;
+  text-align: left !important;
+}
+
+#id_generator-token {
+  width: max-content; /* Ensures the width is based on the content */
+  font-size: 1.5em; /* Increases the font size */
+  padding: 10px; /* Adds extra space inside the element */
+  margin: 10px; /* Adds space around the element */
+  border: 1px solid #ccc; /* Optional: to make the size more noticeable */
+  display: inline-block; /* Ensures it respects the max-content width */
 }
 
 /* footer btn */
 #content > div > form > table {
   margin-bottom: 5rem !important;
+}
+
+label {
+    padding-right: 10px;
+    text-align: left;
+}
+
+a.btn.btn-block.btn-secondary.bg-secondary,
+a.btn.btn-success.bg-success {
+  margin-bottom: 1rem;
+}
+
+.replay-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.replay-btn:hover {
+  background-color: #45a049;
 }

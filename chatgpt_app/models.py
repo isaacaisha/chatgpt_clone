@@ -45,6 +45,26 @@ class User(AbstractUser):
         return self.email
     
 
+class VIPUser(models.Model):
+    user = models.OneToOneField(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='vip_profile'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    @property
+    def name(self):
+        return self.user.name
+
+    @property
+    def email(self):
+        return self.user.email
+
+    def __str__(self):
+        return f"{self.name} ({self.email})"
+
+
 class ChatData(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.CharField(max_length=999991)
