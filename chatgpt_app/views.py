@@ -175,7 +175,7 @@ def vipPage(request):
         messages.warning(request, "Please complete two-factor authentication.")
         # Redirect to two_factor login
         return redirect('two_factor:login')
-    
+
     context = {
         'date': timezone.now().strftime("%a %d %B %Y"),
         'message': 'Welcome to the Superuser Page!',
