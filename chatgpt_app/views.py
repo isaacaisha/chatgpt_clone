@@ -17,7 +17,10 @@ from django.contrib.auth import authenticate, login, logout
 from gtts import gTTS
 from django.utils import timezone
 
+from dotenv import load_dotenv
 
+# Load environment variables from .env file
+load_dotenv()
 client = OpenAI(api_key=os.getenv('OPENAI_API_KEY'))
 
 
@@ -125,8 +128,10 @@ def logoutUser(request):
     return redirect('login')
 
 
-@login_required
+@login_required(login_url='login')
 def index(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
     context = {
         'date': timezone.now().strftime("%a %d %B %Y"),
         }

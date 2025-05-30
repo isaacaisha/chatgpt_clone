@@ -27,6 +27,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-#bf*vlv%$(l74v8l3gcb2%jx=dudjsl1t@ux^65t9)-xx#ukdf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+#DEBUG = True
 DEBUG = False
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -41,7 +42,13 @@ SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 SECURE_SSL_REDIRECT = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    "0.0.0.0",
+    "127.0.0.1",
+    "localhost",
+    "chatgpt-clone.siisi.online",
+    "www.chatgpt-clone.siisi.online",
+]
 
 PROXY = {
     'http': 'http://127.0.0.1:8080',
@@ -50,8 +57,8 @@ PROXY = {
 
 # Set secure headers (Optional but recommended for production)
 CSRF_TRUSTED_ORIGINS = [
-    'https://chatgpt-clone.copromanager.pro/',
-    'https://www.chatgpt-clone.copromanager.pro/'
+    'https://chatgpt-clone.siisi.online',
+    'https://www.chatgpt-clone.siisi.online'
 ]
 
 SECURE_BROWSER_XSS_FILTER = True
