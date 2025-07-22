@@ -13,7 +13,7 @@ python3 manage.py makemigrations
 python3 manage.py migrate
 
 sudo journalctl -u chatgpt_clone.service -f
-python3 manage.py runserver 0.0.0.0:8009
+python3 manage.py runserver 0.0.0.0:8079
 
 # CONNECT POSTGRES
 sudo -i -u postgres
